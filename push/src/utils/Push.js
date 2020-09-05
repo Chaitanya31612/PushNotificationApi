@@ -1,10 +1,6 @@
 const publicVapidKey =
   "BIMSlZfuSZUGgVjOY-ruHAVDxJMjeNiXS4SuNMAKtPoe1-ETRAG1VzwGqGRtBbpilDGFSBrMlZ1wMvon_8SNXjs";
 
-// if('serviceWorker' in navigator) {
-//   send("Myways Notifs", "This is a required notifications").catch(err => console.error(err))
-// }
-
 function urlBase64ToUint8Array(base64String) {
   const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
   const base64 = (base64String + padding)
@@ -21,26 +17,11 @@ function urlBase64ToUint8Array(base64String) {
 }
 
 export async function send(title = "Push Sent", message = "Hello push") {
-  console.log("Registering serviceWorker");
   const register = await navigator.serviceWorker.register("/sw.js", {
     scope: "/",
   });
 
   console.log("Service worker registered", register);
-  //   navigator.serviceWorker.ready.then(async function () {
-  //       const subscription = await register.pushManager.subscribe({
-  //         userVisibleOnly: true,
-  //         applicationServerKey: urlBase64ToUint8Array(publicVapidKey)
-  //         });
-  //       console.log('Registered push', subscription);
-  //       await fetch('http://localhost:3001/subscribe', {
-  //             method: 'POST',
-  //             body: JSON.stringify({subscription, title, message}),
-  //             headers: {
-  //             'content-type': 'application/json'
-  //             }
-  //         });
-  //   })
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.ready
       .then(function (registration) {
@@ -86,21 +67,7 @@ export async function send(title = "Push Sent", message = "Hello push") {
         );
       });
   }
-  //   const subscription = register.pushManager.subscribe({
-  //     userVisibleOnly: true,
-  //     applicationServerKey: urlBase64ToUint8Array(publicVapidKey)
-  //     }).then(() => console.log("successfully subscribed")).catch(err => console.log('errore', err))
-  // console.log(JSON.stringify({subscription, title: "hello"}));
   console.log("Sending push");
-  // await fetch('http://localhost:3001/subscribe', {
-  //     method: 'POST',
-  //     body: JSON.stringify({subscription, title, message}),
-  //     headers: {
-  //     'content-type': 'application/json'
-  //     }
-  // });
-  // const geting = await fetch('http://localhost:3001/')
-  // console.log('geting', geting)
   console.log("Sent push");
 }
 
